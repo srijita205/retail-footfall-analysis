@@ -1,0 +1,199 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Smart Store Analytics — Srijita Kayal</title>
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@300;400;500;700&display=swap" rel="stylesheet">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.js"></script>
+<style>
+  *{box-sizing:border-box;margin:0;padding:0}
+  body{font-family:'DM Sans',sans-serif;background:#0d1117;color:#e6edf3;min-height:100vh}
+  .wrap{padding:36px 40px;max-width:1200px;margin:0 auto}
+  .badge{display:inline-block;font-size:10px;font-weight:700;letter-spacing:.1em;padding:3px 10px;border-radius:4px;background:#0c2d6b;color:#79c0ff;border:1px solid #1f6feb66;margin-bottom:14px}
+  h1{font-size:26px;font-weight:700;color:#e6edf3;margin-bottom:6px}
+  .sub{font-size:13px;color:#8b949e;margin-bottom:28px}
+  .divider{border:none;border-top:1px solid #21262d;margin:28px 0}
+  .kpi-row{display:grid;grid-template-columns:repeat(5,1fr);gap:12px;margin-bottom:28px}
+  .kpi{background:#161b22;border:1px solid #30363d;border-radius:10px;padding:18px 20px}
+  .kpi-label{font-size:10px;text-transform:uppercase;letter-spacing:.08em;color:#8b949e;margin-bottom:7px}
+  .kpi-val{font-size:24px;font-weight:700;color:#e6edf3}
+  .section-title{font-size:11px;text-transform:uppercase;letter-spacing:.1em;color:#8b949e;margin-bottom:16px;font-weight:500}
+  .chart-row{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-bottom:16px}
+  .chart-card{background:#161b22;border:1px solid #30363d;border-radius:10px;padding:22px}
+  .chart-title{font-size:13px;font-weight:500;color:#c9d1d9;margin-bottom:4px}
+  .chart-sub{font-size:11px;color:#8b949e;margin-bottom:16px}
+  .insight-row{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-bottom:14px}
+  .ins-card{background:#161b22;border:1px solid #30363d;border-radius:10px;padding:20px}
+  .ins-label{font-size:10px;text-transform:uppercase;letter-spacing:.1em;color:#8b949e;margin-bottom:6px}
+  .ins-val{font-size:15px;font-weight:600;color:#e6edf3;margin-bottom:8px}
+  .ins-desc{font-size:12px;color:#8b949e;line-height:1.6}
+  .pill{display:inline-block;padding:2px 10px;border-radius:99px;font-size:10px;font-weight:600;margin-bottom:8px}
+  .p-green{background:#0d4429;color:#3fb950;border:1px solid #238636}
+  .p-blue{background:#0c2d6b;color:#79c0ff;border:1px solid #1f6feb}
+  .p-orange{background:#3d1f00;color:#ffa657;border:1px solid #9e4200}
+  .legend{display:flex;flex-wrap:wrap;gap:14px;margin-bottom:12px}
+  .leg-item{display:flex;align-items:center;gap:5px;font-size:11px;color:#8b949e}
+  .leg-dot{width:10px;height:10px;border-radius:2px;flex-shrink:0}
+  .full-card{background:#161b22;border:1px solid #30363d;border-radius:10px;padding:22px;margin-bottom:16px}
+  .footer{text-align:center;font-size:11px;color:#484f58;padding:20px 0}
+  .tag-row{display:flex;gap:8px;flex-wrap:wrap;margin-top:10px}
+  .tag{font-size:10px;padding:3px 10px;border-radius:4px;border:1px solid #30363d;color:#8b949e}
+  @media(max-width:768px){
+    .kpi-row{grid-template-columns:repeat(2,1fr)}
+    .chart-row{grid-template-columns:1fr}
+    .insight-row{grid-template-columns:1fr}
+    .wrap{padding:20px}
+  }
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <span class="badge">DEMO · SIMULATED DATA</span>
+  <h1>Smart Store Footfall &amp; Behavior Analytics</h1>
+  <p class="sub">Tracking what customers actually do at the shelf — turning it into business decisions. &nbsp;|&nbsp; MERL Shopping Dataset · 106 videos · 41 subjects · 5 actions</p>
+
+  <!-- KPIs -->
+  <div class="kpi-row">
+    <div class="kpi"><div class="kpi-label">Total Actions</div><div class="kpi-val">2,664</div></div>
+    <div class="kpi"><div class="kpi-label">Avg Duration</div><div class="kpi-val">5.2s</div></div>
+    <div class="kpi"><div class="kpi-label">Top Action</div><div class="kpi-val">Reach</div></div>
+    <div class="kpi"><div class="kpi-label">Avg Confidence</div><div class="kpi-val">72.4%</div></div>
+    <div class="kpi"><div class="kpi-label">Subjects</div><div class="kpi-val">41</div></div>
+  </div>
+
+  <hr class="divider">
+  <div class="section-title">Action Analysis</div>
+
+  <div class="chart-row">
+    <!-- Chart 1 -->
+    <div class="chart-card">
+      <div class="chart-title">Action frequency</div>
+      <div class="chart-sub">Which actions happen most?</div>
+      <div class="legend">
+        <span class="leg-item"><span class="leg-dot" style="background:#00C9A7"></span>Reach to Shelf</span>
+        <span class="leg-item"><span class="leg-dot" style="background:#845EC2"></span>Retract from Shelf</span>
+        <span class="leg-item"><span class="leg-dot" style="background:#4D8EFF"></span>Inspect Shelf</span>
+        <span class="leg-item"><span class="leg-dot" style="background:#FFC75F"></span>Inspect Product</span>
+        <span class="leg-item"><span class="leg-dot" style="background:#FF6F91"></span>Hand in Shelf</span>
+      </div>
+      <div style="position:relative;width:100%;height:220px">
+        <canvas id="c1"></canvas>
+      </div>
+    </div>
+    <!-- Chart 2 -->
+    <div class="chart-card">
+      <div class="chart-title">Average duration by action</div>
+      <div class="chart-sub">How long does each action last?</div>
+      <div style="position:relative;width:100%;height:260px">
+        <canvas id="c2"></canvas>
+      </div>
+    </div>
+  </div>
+
+  <div class="chart-row">
+    <!-- Chart 3 -->
+    <div class="chart-card">
+      <div class="chart-title">Confidence score distribution</div>
+      <div class="chart-sub">How reliable are the detections?</div>
+      <div style="position:relative;width:100%;height:220px">
+        <canvas id="c3"></canvas>
+      </div>
+    </div>
+    <!-- Chart 4 -->
+    <div class="chart-card">
+      <div class="chart-title">Activity over session time</div>
+      <div class="chart-sub">When do actions cluster in a session?</div>
+      <div style="position:relative;width:100%;height:220px">
+        <canvas id="c4"></canvas>
+      </div>
+    </div>
+  </div>
+
+  <hr class="divider">
+  <div class="section-title">Business Insights &amp; Recommendations</div>
+
+  <div class="insight-row">
+    <div class="ins-card">
+      <span class="pill p-green">Highest Traffic</span>
+      <div class="ins-val">Reach to Shelf</div>
+      <div class="ins-desc">Occurs 705× — place high-margin impulse products at this touchpoint. Consider combo offers adjacent to this zone.</div>
+    </div>
+    <div class="ins-card">
+      <span class="pill p-blue">Longest Engagement</span>
+      <div class="ins-val">Inspect Product</div>
+      <div class="ins-desc">Avg 6.3s per instance — customers linger here. Prioritise shelf visibility, better lighting, and premium product placement.</div>
+    </div>
+    <div class="ins-card">
+      <span class="pill p-orange">Needs Attention</span>
+      <div class="ins-val">Hand in Shelf</div>
+      <div class="ins-desc">Only 373× — lowest engagement. Review product placement, signage, and shelf-eye-level alignment to boost interaction.</div>
+    </div>
+  </div>
+
+  <div class="full-card">
+    <div class="ins-label">Product Pick-Up Ratio</div>
+    <div class="ins-val">High product inspection vs shelf browse — ratio 1.55</div>
+    <div class="ins-desc">Customers who browse shelves convert to product pick-up at a 1.55× rate — strong signal of good shelf design and eye-level product alignment.</div>
+  </div>
+
+  <hr class="divider">
+  <div class="section-title">Project Info</div>
+  <div class="full-card" style="display:flex;gap:32px;flex-wrap:wrap;align-items:center">
+    <div style="flex:1;min-width:200px">
+      <div style="font-size:13px;color:#c9d1d9;font-weight:500;margin-bottom:4px">Smart Store Footfall &amp; Behavior Analytics</div>
+      <div style="font-size:12px;color:#8b949e;margin-bottom:12px">MERL Shopping Dataset · 106 videos · 41 subjects · 5 in-store shopping actions</div>
+      <div class="tag-row">
+        <span class="tag">Python</span>
+        <span class="tag">Streamlit</span>
+        <span class="tag">Pandas</span>
+        <span class="tag">Seaborn</span>
+        <span class="tag">SciPy</span>
+        <span class="tag">Matplotlib</span>
+        <span class="tag">MERL Dataset</span>
+      </div>
+    </div>
+    <div style="flex:1;min-width:200px">
+      <div style="font-size:12px;color:#8b949e;line-height:2">
+        <div><strong style="color:#c9d1d9">Srijita Kayal</strong></div>
+        <div>MBA — Data Science &amp; Business Analytics</div>
+        <div>Bengal Institute of Business Studies, Kolkata</div>
+        <div style="margin-top:8px">
+          <a href="https://linkedin.com/in/srijita-kayal-data-analytic-business-analytic" style="color:#79c0ff;text-decoration:none;font-size:11px;margin-right:14px">LinkedIn</a>
+          <a href="https://github.com/srijita205" style="color:#79c0ff;text-decoration:none;font-size:11px">GitHub</a>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="footer">Smart Store Analytics &nbsp;·&nbsp; Srijita Kayal &nbsp;·&nbsp; MERL Shopping Dataset © Mitsubishi Electric Research Labs, 2016</div>
+</div>
+
+<script>
+const COLORS=['#00C9A7','#845EC2','#4D8EFF','#FFC75F','#FF6F91'];
+const ACTIONS=['Reach to Shelf','Retract from Shelf','Inspect Shelf','Inspect Product','Hand in Shelf'];
+const gridCfg={color:'#21262d',lineWidth:.8};
+const tickCfg={color:'#8b949e',font:{size:11,family:'DM Sans,sans-serif'}};
+const baseOpts={responsive:true,maintainAspectRatio:false,plugins:{legend:{display:false},tooltip:{backgroundColor:'#161b22',borderColor:'#30363d',borderWidth:1,titleColor:'#e6edf3',bodyColor:'#8b949e',padding:10,cornerRadius:6}}};
+
+// Chart 1 — Frequency
+new Chart(document.getElementById('c1'),{type:'bar',data:{labels:ACTIONS.map(a=>a.split(' ').slice(0,3).join(' ')),datasets:[{data:[705,644,487,455,373],backgroundColor:COLORS,borderRadius:4,borderSkipped:false}]},options:{...baseOpts,indexAxis:'y',scales:{x:{grid:gridCfg,ticks:tickCfg,border:{display:false}},y:{grid:{display:false},ticks:{...tickCfg,font:{size:10,family:'DM Sans,sans-serif'}},border:{display:false}}}}});
+
+// Chart 2 — Duration
+new Chart(document.getElementById('c2'),{type:'bar',data:{labels:['Inspect\nProduct','Hand in\nShelf','Inspect\nShelf','Reach to\nShelf','Retract'],datasets:[{data:[6.3,6.2,4.8,3.5,2.8],backgroundColor:['#FFC75F','#FF6F91','#4D8EFF','#00C9A7','#845EC2'],borderRadius:4,borderSkipped:false}]},options:{...baseOpts,scales:{x:{grid:{display:false},ticks:{...tickCfg,font:{size:10,family:'DM Sans,sans-serif'}},border:{display:false}},y:{grid:gridCfg,ticks:{...tickCfg,callback:v=>v+'s'},border:{display:false},title:{display:true,text:'seconds',color:'#8b949e',font:{size:10}}}}}});
+
+// Chart 3 — Confidence
+const bins=[.40,.45,.50,.55,.60,.65,.70,.75,.80,.85,.90,.95];
+function gbins(mean,std,n){return bins.map(b=>{const x=b+.025;return Math.round(n*Math.exp(-.5*((x-mean)/std)**2)/(std*Math.sqrt(2*Math.PI))*.05);})}
+const ds3=ACTIONS.map((a,i)=>({label:a,data:gbins(.72,.12,700),borderColor:COLORS[i],backgroundColor:COLORS[i]+'22',fill:true,tension:.4,pointRadius:0,borderWidth:1.5}));
+new Chart(document.getElementById('c3'),{type:'line',data:{labels:bins.map(b=>b.toFixed(2)),datasets:ds3},options:{...baseOpts,scales:{x:{grid:gridCfg,ticks:tickCfg,border:{display:false},title:{display:true,text:'confidence score',color:'#8b949e',font:{size:10}}},y:{grid:gridCfg,ticks:tickCfg,border:{display:false}}}}});
+
+// Chart 4 — Activity over time
+const segs=['0–20s','20–40s','40–60s','60–80s','80–100s','100–120s'];
+const seed=[703,412,619,388,510,477];
+const ds4=ACTIONS.map((a,i)=>({label:a,data:segs.map((_,j)=>Math.round(seed[(i+j)%6]*([.18,.14,.17,.15,.19,.17][j])+i*3)),backgroundColor:COLORS[i]+'cc',borderWidth:0,borderRadius:2}));
+new Chart(document.getElementById('c4'),{type:'bar',data:{labels:segs,datasets:ds4},options:{...baseOpts,scales:{x:{stacked:true,grid:{display:false},ticks:{...tickCfg,font:{size:10,family:'DM Sans,sans-serif'}},border:{display:false}},y:{stacked:true,grid:gridCfg,ticks:tickCfg,border:{display:false}}}}});
+</script>
+</body>
+</html>

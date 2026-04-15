@@ -1,0 +1,5 @@
+git init
+git add dashboard.py data_loader.py README.md requirements.txt .gitignore
+git commit -m "feat: Smart Store Footfall Analytics dashboard"
+git remote add origin https://github.com/srijita205/retail-footfall-analysis.git
+git push -u origin main
