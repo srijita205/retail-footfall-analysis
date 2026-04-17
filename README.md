@@ -145,7 +145,7 @@ Instead of just showing code, this project answers:
 ## 👩‍💻 Author
 
 **Srijita Kayal**  
-MBA — Data Science & Business Analytics | BIBS, Kolkata  
+MBA — Data Science & Business Analytics
 [LinkedIn](https://linkedin.com/in/srijita-kayal-data-analytic-business-analytic) · [GitHub](https://github.com/srijita205) · [Kaggle](https://kaggle.com/srijitakayal)
 
 ---
